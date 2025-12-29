@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juez — Ringside FEB</title>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0B6E4F">
+
+  <!-- iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icon-512.png">
+  <meta name="apple-mobile-web-app-title" content="Juez FEB">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="feb-header">
+  <img src="logo-feb.png" class="feb-logo">
+  <div class="feb-title">Federación Entrerriana de Boxeo</div>
+</header>
+
+<div class="section-box">
+  <h2>Tarjeta del Juez</h2>
+
+  <label>Boxeador Rojo</label>
+  <input id="rojo" type="text">
+
+  <label>Boxeador Azul</label>
+  <input id="azul" type="text">
+
+  <label>Puntaje Rojo</label>
+  <input id="puntajeRojo" type="number">
+
+  <label>Puntaje Azul</label>
+  <input id="puntajeAzul" type="number">
+
+  <button onclick="guardarTarjeta()">Guardar Tarjeta</button>
+</div>
+
+<div class="section-box">
+  <h2>Historial del Juez</h2>
+  <div id="listaTarjetas"></div>
+</div>
+
+<script src="script.js"></script>
+
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+  }
+</script>
+
+</body>
+</html>

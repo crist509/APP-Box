@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+    <div class="section-box">
+  
+  <div id="listaHistorial"></div>
+</div>
 <head>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-
+            <!-- iOS PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon-512.png">
+    <meta name="apple-mobile-web-app-title" content="Ringside FEB"> 
+    <h2>Historial de Combates</h2>
     <script>
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("service-worker.js");
@@ -96,11 +105,46 @@
             width: 90%;
             max-width: 500px;
             background: #222;
-        }
+        } 
+                    /* Encabezado Institucional FEB */
+        .feb-header {
+            background-color: #0B6E4F; /* Verde FEB */
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 15px;
+            border-bottom: 4px solid #C9A227; /* Dorado institucional */
+            text-align: center;
+            }
+
+        .feb-logo {
+            height: 45px;
+            margin-right: 12px;
+            }
+
+        .feb-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            font-family: 'Inter', 'Roboto', sans-serif;
+            }
+        .historial-item {
+            background: #ffffff;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            font-size: 0.95rem;
+}
     </style>
 </head>
 
 <body>
+
+    <header class="feb-header">
+      <img src="logo-feb.png" alt="Logo FEB" class="feb-logo">
+      <div class="feb-title">Federación Entrerriana de Boxeo</div>
+  </header>
 
     <h1>Ringside Timer Pro</h1>
 
@@ -677,6 +721,73 @@
             <th>Ganador</th>
         </tr>
     </table>
+    <script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+  }
+    // ===== IndexedDB: Base de datos del histórico =====
+    let db;
+
+    const request = indexedDB.open("RingsideFEB_DB", 1);
+
+    request.onupgradeneeded = function(event) {
+    db = event.target.result;
+    const store = db.createObjectStore("combates", { keyPath: "id", autoIncrement: true });
+    store.createIndex("fecha", "fecha", { unique: false });
+    };
+
+    request.onsuccess = function(event) {
+    db = event.target.result;
+    };
+
+    request.onerror = function(event) {
+    console.error("Error al abrir IndexedDB:", event);
+    };
+    function guardarCombate(data) {
+  const tx = db.transaction("combates", "readwrite");
+  const store = tx.objectStore("combates");
+  store.add(data);
+
+  tx.oncomplete = () => console.log("Combate guardado en histórico");
+  tx.onerror = () => console.error("Error al guardar combate");
+}
+guardarCombate({
+  fecha: new Date().toISOString(),
+  boxeadorRojo: document.getElementById("rojo").value,
+  boxeadorAzul: document.getElementById("azul").value,
+  ganador: ganadorFinal,
+  tarjetas: tarjetasFinales,
+  pdf: "generado" // opcional
+});
+function cargarHistorial(callback) {
+  const tx = db.transaction("combates", "readonly");
+  const store = tx.objectStore("combates");
+  const request = store.getAll();
+
+  request.onsuccess = () => callback(request.result);
+}
+function mostrarHistorial() {
+  cargarHistorial((combates) => {
+    const cont = document.getElementById("listaHistorial");
+    cont.innerHTML = "";
+
+    combates.forEach(c => {
+      const item = document.createElement("div");
+      item.className = "historial-item";
+      item.innerHTML = `
+        <strong>${c.boxeadorRojo} vs ${c.boxeadorAzul}</strong><br>
+        Fecha: ${new Date(c.fecha).toLocaleString()}<br>
+        Ganador: ${c.ganador}<br>
+        <button onclick="verDetalle(${c.id})">Ver Detalle</button>
+      `;
+      cont.appendChild(item);
+    });
+  });
+}
+setTimeout(mostrarHistorial, 1000);
+
+</script>
+
 
 </body>
 </html>
