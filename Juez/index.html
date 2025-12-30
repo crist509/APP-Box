@@ -24,22 +24,94 @@
   <div class="feb-title">Federación Entrerriana de Boxeo</div>
 </header>
 
-<div class="section-box">
-  <h2>Tarjeta del Juez</h2>
+<div class="tarjeta-juez">
 
-  <label>Boxeador Rojo</label>
-  <input id="rojo" type="text">
+    <div class="encabezado">
+        <img src="logo-feb.png" alt="Logo FEB" class="logo-feb">
+        <h2>Federación Entrerriana de Boxeo</h2>
+    </div>
 
-  <label>Boxeador Azul</label>
-  <input id="azul" type="text">
+    <div class="info-general">
+        <label>Fecha: <input type="date" id="fechaCombate"></label>
+        <label>Lugar: <input type="text" placeholder="Lugar del evento"></label>
+    </div>
 
-  <label>Puntaje Rojo</label>
-  <input id="puntajeRojo" type="number">
+    <div class="boxeadores">
+        <div class="rojo">
+            <h3>🟥 Boxeador Rojo</h3>
+            <input type="text" id="rojo" placeholder="Nombre del boxeador rojo">
+        </div>
 
-  <label>Puntaje Azul</label>
-  <input id="puntajeAzul" type="number">
+        <div class="azul">
+            <h3>🟦 Boxeador Azul</h3>
+            <input type="text" id="azul" placeholder="Nombre del boxeador azul">
+        </div>
+    </div>
 
-  <button onclick="guardarTarjeta()">Guardar Tarjeta</button>
+    <table class="tabla-puntaje">
+        <tr>
+            <th>Round</th>
+            <th>Rojo</th>
+            <th>Azul</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td><input type="number" min="0" id="r1r"></td>
+            <td><input type="number" min="0" id="r1a"></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><input type="number" min="0" id="r2r"></td>
+            <td><input type="number" min="0" id="r2a"></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><input type="number" min="0" id="r3r"></td>
+            <td><input type="number" min="0" id="r3a"></td>
+        </tr>
+    </table>
+
+    <div class="totales">
+        <div class="total-rojo">
+            <label>Total Rojo:</label>
+            <input type="number" id="totalRojo" readonly>
+        </div>
+
+        <div class="total-azul">
+            <label>Total Azul:</label>
+            <input type="number" id="totalAzul" readonly>
+        </div>
+    </div>
+
+    <div class="descuentos">
+        <div class="descuento-rojo">
+            <label>Descuentos Rojo:</label>
+            <input type="text" placeholder="Ej: -1 por golpe bajo">
+        </div>
+
+        <div class="descuento-azul">
+            <label>Descuentos Azul:</label>
+            <input type="text" placeholder="Ej: -1 por agarrar">
+        </div>
+    </div>
+
+    <div class="ganador">
+        <label>Ganador: <input type="text"></label>
+        <label>Por: <input type="text" placeholder="Puntos, RSC, abandono..."></label>
+    </div>
+
+    <div class="firma">
+    <label>Nombre del juez: <input type="text" id="nombreJuez"></label>
+
+    <label>Firma del juez:</label>
+    <canvas id="firmaCanvas" width="300" height="120"></canvas>
+
+    <button id="limpiarFirma" class="btn-limpiar">Borrar firma</button>
+</div>
+
+    <!-- BOTÓN PDF -->
+    <button id="btnPDF" class="btn-pdf">Generar PDF</button>
+
 </div>
 
 <div class="section-box">
@@ -47,6 +119,11 @@
   <div id="listaTarjetas"></div>
 </div>
 
+<!-- LIBRERÍAS PARA PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- TU SCRIPT -->
 <script src="script.js"></script>
 
 <script>

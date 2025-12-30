@@ -1,0 +1,113 @@
+.tarjeta-juez {
+    max-width: 450px;
+    margin: auto;
+    padding: 20px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    background: #fff;
+}
+
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-feb {
+    width: 70px;
+    height: auto;
+}
+
+h2 {
+    margin: 0;
+    text-align: left;
+}
+
+.info-general label,
+.descuentos label,
+.ganador label,
+.firma label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.boxeadores {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.boxeadores div {
+    width: 48%;
+}
+
+.rojo h3 { color: red; }
+.azul h3 { color: blue; }
+
+.tabla-puntaje {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.tabla-puntaje th,
+.tabla-puntaje td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: center;
+}
+
+.descuentos {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.descuentos div {
+    width: 48%;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+}
+input {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+
+}
+.totales {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.totales div {
+    width: 48%;
+}
+
+#totalRojo, #totalAzul {
+    background: #eee;
+    font-weight: bold;
+}
+#firmaCanvas {
+    border: 2px solid #000;
+    background: #fff;
+    border-radius: 6px;
+    margin-top: 5px;
+}
+
+.btn-limpiar {
+    margin-top: 10px;
+    padding: 8px;
+    background: #b30000;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
