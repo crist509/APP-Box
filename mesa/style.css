@@ -1,0 +1,252 @@
+/* ============================
+   ESTILO GENERAL TIPO APP FEB
+   ============================ */
+
+body {
+    background: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* HEADER FIJO */
+.mesa-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #0B6E4F;
+    color: white;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 999;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+}
+
+.mesa-logo {
+    width: 45px;
+    height: auto;
+}
+
+.mesa-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.app-container {
+    margin-top: 90px;
+    width: 95%;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* TARJETAS / SECCIONES */
+.section-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: fadeIn 0.6s ease;
+}
+
+/* TITULOS */
+.section-card h2,
+.section-card h3 {
+    margin-top: 0;
+    font-weight: 600;
+}
+
+/* INPUTS */
+input, select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+}
+
+/* BOTONES */
+button {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 12px;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    background: #0B6E4F;
+    color: white;
+    transition: all 0.25s ease;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+}
+
+button:active {
+    transform: scale(0.96);
+    filter: brightness(0.9);
+}
+
+/* TIMER */
+#timer, #roundNumber, #globalTimer {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#timer {
+    font-size: 48px;
+    color: #000;
+}
+
+#roundNumber {
+    font-size: 28px;
+}
+
+#globalTimer {
+    font-size: 32px;
+    color: #0dcaf0;
+}
+
+/* TABLAS DE JUECES */
+.judge-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+.judge-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.judge-table th {
+    background: #0B6E4F;
+    color: white;
+    padding: 8px;
+}
+
+.judge-table td {
+    background: #fafafa;
+    padding: 8px;
+    text-align: center;
+}
+
+/* ANIMACIONES */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .mesa-title {
+        font-size: 18px;
+    }
+}
+
+/* ============================
+   BOTONES PREMIUM FEB
+   ============================ */
+
+#startBtn {
+    background: #0B6E4F;
+    color: white;
+}
+
+#nextBtn {
+    background: #007bff;
+    color: white;
+}
+
+#stopBtn {
+    background: #ffca2c;
+    color: #000;
+}
+
+#resetBtn {
+    background: #6c757d;
+    color: white;
+}
+
+#finishBtn {
+    background: #c1121f;
+    color: white;
+}
+
+/* Hover profesional (solo PC) */
+@media (hover: hover) {
+    button:hover {
+        filter: brightness(1.12);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+}
+
+/* ============================
+   BOTONES EN DOS COLUMNAS (PC)
+   ============================ */
+
+@media (min-width: 1024px) {
+
+    .timer-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        max-width: 650px;
+        margin: 0 auto;
+    }
+
+    #finishBtn {
+        grid-column: span 2;
+    }
+
+    .timer-buttons button {
+        margin: 0;
+        max-width: 100%;
+    }
+}
+
+/* ============================
+   INPUTS ORDENADOS EN PC
+   ============================ */
+
+@media (min-width: 1024px) {
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px 28px;
+        align-items: start;
+    }
+
+    .form-grid > div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-grid label {
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .form-grid input,
+    .form-grid select {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 0;
+    }
+
+    .full-row {
+        grid-column: span 2;
+    }
+}

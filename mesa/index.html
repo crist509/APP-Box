@@ -1,792 +1,159 @@
 <!DOCTYPE html>
 <html lang="es">
-    <div class="section-box">
-  
-  <div id="listaHistorial"></div>
-</div>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ringside Timer Pro - Mesa FEB</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-            <!-- iOS PWA -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="icon-512.png">
-    <meta name="apple-mobile-web-app-title" content="Ringside FEB"> 
-    <h2>Historial de Combates</h2>
-    <script>
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("service-worker.js");
-    }
-    </script>
-      <meta charset="UTF-8">
-      <title>Ringside Timer Pro</title>
-
-    <style>
-        body {
-            background: #111;
-            color: white;
-            text-align: center;
-            font-family: Arial, sans-serif;
-            margin-top: 20px;
-        }
-        h1 { font-size: 40px; margin-bottom: 10px; }
-
-        #config, #fightData, #judgesSection {
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
-
-        select, input {
-            font-size: 16px;
-            padding: 5px 10px;
-            margin: 5px;
-        }
-
-        #roundNumber { font-size: 50px; margin: 10px; }
-        #timer { font-size: 90px; margin: 20px; }
-
-        button {
-            padding: 12px 20px;
-            font-size: 18px;
-            margin: 8px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        #startBtn { background: #28a745; color: white; }
-        #nextBtn { background: #0dcaf0; color: black; }
-        #stopBtn { background: #dc3545; color: white; }
-        #resetBtn { background: #ffc107; color: black; }
-        #finishBtn { background: #6f42c1; color: white; }
-        #generateCardsBtn { background: #17a2b8; color: white; }
-        #pdfBtn { background: #ff5722; color: white; }
-
-        #status {
-            margin-top: 15px;
-            font-size: 18px;
-            color: #0dcaf0;
-        }
-
-        .judge-card {
-            border: 1px solid #444;
-            margin: 10px auto;
-            padding: 10px;
-            width: 90%;
-            max-width: 600px;
-            background: #222;
-        }
-
-        .judge-card h3 {
-            margin-top: 0;
-        }
-
-        .judge-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        .judge-table th, .judge-table td {
-            border: 1px solid #555;
-            padding: 4px;
-            font-size: 14px;
-        }
-
-        .totals {
-            margin-top: 8px;
-            font-size: 16px;
-        }
-
-        #amateurCard {
-            border: 1px solid #444;
-            margin: 10px auto;
-            padding: 10px;
-            width: 90%;
-            max-width: 500px;
-            background: #222;
-        } 
-                    /* Encabezado Institucional FEB */
-        .feb-header {
-            background-color: #0B6E4F; /* Verde FEB */
-            color: #FFFFFF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 15px;
-            border-bottom: 4px solid #C9A227; /* Dorado institucional */
-            text-align: center;
-            }
-
-        .feb-logo {
-            height: 45px;
-            margin-right: 12px;
-            }
-
-        .feb-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            font-family: 'Inter', 'Roboto', sans-serif;
-            }
-        .historial-item {
-            background: #ffffff;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-            font-size: 0.95rem;
-}
-    </style>
 </head>
 
 <body>
 
-    <header class="feb-header">
-      <img src="logo-feb.png" alt="Logo FEB" class="feb-logo">
-      <div class="feb-title">Federación Entrerriana de Boxeo</div>
-  </header>
+    <!-- HEADER FIJO -->
+    <header class="mesa-header">
+        <img src="logo-feb.png" alt="Logo FEB" class="mesa-logo">
+        <div class="mesa-title">Federación Entrerriana de Boxeo</div>
+    </header>
 
-    <h1>Ringside Timer Pro</h1>
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="app-container">
 
-    <!-- DATOS DEL COMBATE -->
-    <div id="fightData">
-        Lugar:
-        <input type="text" id="fightPlace" placeholder="Ciudad / Estadio" style="width:160px;">
+        <!-- SECCIÓN: DATOS DEL COMBATE -->
+        <div class="section-card">
+    <h2>Datos del Combate</h2>
 
-        Fecha:
-        <input type="date" id="fightDate" style="width:150px;">
+    <div class="form-grid">
 
-        Número de combate:
-        <input type="number" id="fightNumber" min="1" value="1" style="width:60px;">
+        <div>
+            <label>Lugar</label>
+            <input type="text" id="fightPlace" placeholder="Ciudad / Estadio">
+        </div>
 
-        Boxeador Azul:
-        <input type="text" id="blueBoxer" placeholder="Nombre" style="width:140px;">
+        <div>
+            <label>Fecha</label>
+            <input type="date" id="fightDate">
+        </div>
 
-        Boxeador Rojo:
-        <input type="text" id="redBoxer" placeholder="Nombre" style="width:140px;">
+        <div>
+            <label>Número de combate</label>
+            <input type="number" id="fightNumber" min="1" value="1">
+        </div>
 
-        Fallo:
-        <select id="decision">
-            <option value="">(seleccionar)</option>
-            <option value="KO">KO</option>
-            <option value="RSC">RSC</option>
-            <option value="DU">Decisión Unánime</option>
-            <option value="SD">Decisión Dividida</option>
-            <option value="MD">Decisión Mayoritaria</option>
-            <option value="AB">Abandono</option>
-            <option value="NC">Sin decisión</option>
-        </select>
+        <div>
+            <label>Boxeador Azul</label>
+            <input type="text" id="blueBoxer" placeholder="Nombre">
+        </div>
 
-        Ganador:
-        <select id="winner">
-            <option value="">(seleccionar)</option>
-            <option value="Azul">Azul</option>
-            <option value="Rojo">Rojo</option>
-            <option value="Empate">Empate</option>
-        </select>
+        <div>
+            <label>Boxeador Rojo</label>
+            <input type="text" id="redBoxer" placeholder="Nombre">
+        </div>
+
+        <div>
+            <label>Fallo</label>
+            <select id="decision">
+                <option value="">(seleccionar)</option>
+                <option value="KO">KO</option>
+                <option value="RSC">RSC</option>
+                <option value="DU">Decisión Unánime</option>
+                <option value="SD">Decisión Dividida</option>
+                <option value="MD">Decisión Mayoritaria</option>
+                <option value="AB">Abandono</option>
+                <option value="NC">Sin decisión</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Ganador</label>
+            <select id="winner">
+                <option value="">(seleccionar)</option>
+                <option value="Azul">Azul</option>
+                <option value="Rojo">Rojo</option>
+                <option value="Empate">Empate</option>
+            </select>
+        </div>
+
+    </div>
+</div>
+
+        <!-- SECCIÓN: CONFIGURACIÓN -->
+        <div class="section-card">
+            <h2>Configuración</h2>
+
+            <label>Tipo de combate</label>
+            <select id="fightType">
+                <option value="pro">Profesional (3 x 1)</option>
+                <option value="Menores">Amateur (2 x 1)</option>
+            </select>
+
+            <label>Rounds</label>
+            <input type="number" id="roundLimit" value="12" min="3" max="15">
+        </div>
+
+        <!-- SECCIÓN: JUECES -->
+        <div class="section-card">
+            <h2>Jueces</h2>
+
+            <label>Juez 1</label>
+            <input type="text" id="judge1Name" placeholder="Nombre Juez 1">
+
+            <label>Juez 2</label>
+            <input type="text" id="judge2Name" placeholder="Nombre Juez 2">
+
+            <label>Juez 3</label>
+            <input type="text" id="judge3Name" placeholder="Nombre Juez 3">
+
+            <button id="generateCardsBtn">Generar tarjetas</button>
+            
+        </div>
+
+        <!-- TARJETAS PRO/AM -->
+        <div id="cardsContainer"></div>
+
+        <!-- SECCIÓN: TIMER -->
+        <div class="section-card">
+            <h2>Control del Combate</h2>
+
+            <div id="roundNumber">Round: 0</div>
+            <div id="timer">03:00</div>
+
+            <div class="timer-buttons">
+                <button id="startBtn">Iniciar Combate</button>
+                <button id="nextBtn">Siguiente Round</button>
+                <button id="stopBtn">Pausar</button>
+                <button id="resetBtn">Reiniciar</button>
+                <button id="finishBtn">Finalizar Combate</button>
+                <button id="pdfBtn">Exportar ACTA del combate</button>
+            </div>
+
+            <div id="globalTimer">Cronómetro: 00:00</div>
+            <div id="status"></div>
+        </div>
+
+        <!-- SECCIÓN: HISTORIAL -->
+        <div class="section-card">
+            <h2>Historial de Combates</h2>
+            <div id="listaHistorial"></div>
+        </div>
+
     </div>
 
-    <!-- CONFIGURACIÓN -->
-    <div id="config">
-        Tipo de combate:
-        <select id="fightType">
-            <option value="pro">Profesional (3 x 1)</option>
-            <option value="amateur">Amateur (2 x 1)</option>
-        </select>
-
-        Rounds:
-        <input type="number" id="roundLimit" value="12" min="1" max="15">
-    </div>
-
-    <!-- JUECES Y TARJETAS -->
-    <div id="judgesSection">
-        Juez 1:
-        <input type="text" id="judge1Name" placeholder="Nombre Juez 1" style="width:140px;">
-        Juez 2:
-        <input type="text" id="judge2Name" placeholder="Nombre Juez 2" style="width:140px;">
-        Juez 3:
-        <input type="text" id="judge3Name" placeholder="Nombre Juez 3" style="width:140px;">
-
-        <br>
-
-        <button id="generateCardsBtn">Generar tarjetas</button>
-        <button id="pdfBtn">Guardar tarjetas en PDF</button>
-    </div>
-
-    <div id="cardsContainer"></div>
-
-    <!-- DISPLAY TIMER -->
-    <div id="roundNumber">Round: 0</div>
-    <div id="timer">03:00</div>
-
-    <button id="startBtn">Iniciar Combate</button>
-    <button id="nextBtn">Siguiente Round</button>
-    <button id="stopBtn">Pausar</button>
-    <button id="resetBtn">Reiniciar</button>
-    <button id="finishBtn">Finalizar Combate</button>
-
-    <div id="globalTimer" style="font-size:40px; margin-top:10px; color:#0dcaf0;">
-        Cronómetro: 00:00
-    </div>
-
-    <div id="status"></div>
-
-    <!-- CAMPANAS REALES -->
-    <audio id="bellStart" src="https://www.soundjay.com/mechanical/sounds/bell-ring-01.mp3"></audio>
-    <audio id="bellEnd" src="https://www.soundjay.com/mechanical/sounds/bell-ring-03.mp3"></audio>
-    <audio id="tenSeconds" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
-
-    <!-- jsPDF -->
+    <!-- AUDIOS -->
+    <audio id="bellStart" src="audio/comienzo.mp3"></audio>
+    <audio id="bellEnd" src="audio/fin.mp3"></audio>
+    <audio id="tenSeconds" src="audio/ultimos10.mp3"></audio>
+    
+            <!-- TU SCRIPT ORIGINAL (COMPLETO) -->
+            <!-- jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-    <script>
-        const config = {
-            pro: { roundSeconds: 180, restSeconds: 60 },
-            amateur: { roundSeconds: 120, restSeconds: 60 }
-        };
+        <!-- html2canvas (FALTABA) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-        let currentMode = "pro";
-        let roundLimit = 12;
-        let round = 0;
-        let timeLeft = config[currentMode].roundSeconds;
-        let timerInterval = null;
-        let inRest = false;
+        <!-- TU SCRIPT ORIGINAL -->
+    <script src="script.js"></script>
 
-        let globalSeconds = 0;
-        let globalInterval = null;
-
-        function updateGlobalTimer() {
-            let m = Math.floor(globalSeconds / 60);
-            let s = globalSeconds % 60;
-            document.getElementById("globalTimer").textContent =
-                "Cronómetro: " + m.toString().padStart(2, '0') + ":" + s.toString().padStart(2, '0');
-        }
-
-        function startGlobalTimer() {
-            if (globalInterval) return;
-            globalInterval = setInterval(() => {
-                globalSeconds++;
-                updateGlobalTimer();
-            }, 1000);
-        }
-
-        function stopGlobalTimer() {
-            clearInterval(globalInterval);
-            globalInterval = null;
-        }
-
-        function resetGlobalTimer() {
-            stopGlobalTimer();
-            globalSeconds = 0;
-            updateGlobalTimer();
-        }
-
-        const roundDisplay = document.getElementById("roundNumber");
-        const timerDisplay = document.getElementById("timer");
-        const statusDisplay = document.getElementById("status");
-
-        const bellStart = document.getElementById("bellStart");
-        const bellEnd = document.getElementById("bellEnd");
-        const tenSeconds = document.getElementById("tenSeconds");
-
-        document.getElementById("fightType").addEventListener("change", () => {
-            if (round === 0) {
-                currentMode = document.getElementById("fightType").value;
-                timeLeft = config[currentMode].roundSeconds;
-                timerDisplay.textContent = formatTime(timeLeft);
-            }
-        });
-
-        document.getElementById("roundLimit").addEventListener("change", () => {
-            if (round === 0) {
-                roundLimit = parseInt(document.getElementById("roundLimit").value);
-            }
-        });
-
-        function formatTime(seconds) {
-            let m = Math.floor(seconds / 60);
-            let s = seconds % 60;
-            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-        }
-
-        function startRound() {
-            if (round >= roundLimit) {
-                statusDisplay.textContent = "Combate finalizado. Se alcanzó el límite de rounds.";
-                return;
-            }
-
-            round++;
-            inRest = false;
-            timeLeft = config[currentMode].roundSeconds;
-            roundDisplay.textContent = "Round: " + round;
-            timerDisplay.textContent = formatTime(timeLeft);
-            statusDisplay.textContent = "Round " + round + " en curso.";
-            bellStart.play();
-        }
-
-        function startTimer() {
-            if (timerInterval) return;
-
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                timerDisplay.textContent = formatTime(timeLeft);
-
-                if (!inRest && timeLeft === 10) {
-                    tenSeconds.play();
-                    statusDisplay.textContent = "¡Últimos 10 segundos!";
-                }
-
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    timerInterval = null;
-
-                    if (!inRest) {
-                        bellEnd.play();
-                        statusDisplay.textContent = "Fin del round " + round + ". Descanso.";
-                        startRest();
-                        startTimer();
-                    } else {
-                        startRound();
-                        startTimer();
-                    }
-                }
-            }, 1000);
-        }
-
-        function startRest() {
-            inRest = true;
-            timeLeft = config[currentMode].restSeconds;
-            timerDisplay.textContent = formatTime(timeLeft);
-        }
-
-        document.getElementById("startBtn").onclick = () => {
-            startGlobalTimer();
-            if (round === 0) startRound();
-            startTimer();
-        };
-
-        document.getElementById("nextBtn").onclick = () => {
-            clearInterval(timerInterval);
-            timerInterval = null;
-            startRound();
-        };
-
-        document.getElementById("stopBtn").onclick = () => {
-            stopGlobalTimer();
-            clearInterval(timerInterval);
-            timerInterval = null;
-            statusDisplay.textContent = "Pausado.";
-        };
-
-        document.getElementById("resetBtn").onclick = () => {
-            resetGlobalTimer();
-            clearInterval(timerInterval);
-            timerInterval = null;
-            round = 0;
-            inRest = false;
-            timeLeft = config[currentMode].roundSeconds;
-            roundDisplay.textContent = "Round: 0";
-            timerDisplay.textContent = formatTime(timeLeft);
-            statusDisplay.textContent = "Reiniciado.";
-        };
-
-        document.getElementById("finishBtn").onclick = () => {
-            saveFightRecord();
-            stopGlobalTimer();
-            clearInterval(timerInterval);
-            timerInterval = null;
-            statusDisplay.textContent = "Combate finalizado.";
-        };
-
-        // ---------- TARJETAS DE JUECES ----------
-
-        const cardsContainer = document.getElementById("cardsContainer");
-
-        function createScoreSelect() {
-            const select = document.createElement("select");
-            const empty = document.createElement("option");
-            empty.value = "";
-            empty.textContent = "";
-            select.appendChild(empty);
-
-            [10, 9, 8, 7, 6].forEach(val => {
-                const opt = document.createElement("option");
-                opt.value = val;
-                opt.textContent = val;
-                select.appendChild(opt);
-            });
-
-            return select;
-        }
-
-        function calculateJudgeTotals(cardDiv) {
-            const azulSelects = cardDiv.querySelectorAll(".score-azul");
-            const rojoSelects = cardDiv.querySelectorAll(".score-rojo");
-            let totalAzul = 0;
-            let totalRojo = 0;
-
-            azulSelects.forEach(sel => {
-                if (sel.value) totalAzul += parseInt(sel.value);
-            });
-
-            rojoSelects.forEach(sel => {
-                if (sel.value) totalRojo += parseInt(sel.value);
-            });
-
-            cardDiv.querySelector(".total-azul").textContent = totalAzul;
-            cardDiv.querySelector(".total-rojo").textContent = totalRojo;
-        }
-
-        function generateProCards() {
-            cardsContainer.innerHTML = "";
-
-            const judges = [
-                { id: 1, name: document.getElementById("judge1Name").value || "Juez 1" },
-                { id: 2, name: document.getElementById("judge2Name").value || "Juez 2" },
-                { id: 3, name: document.getElementById("judge3Name").value || "Juez 3" }
-            ];
-
-            judges.forEach(j => {
-                const card = document.createElement("div");
-                card.className = "judge-card";
-
-                const title = document.createElement("h3");
-                title.textContent = "Tarjeta " + j.name;
-                card.appendChild(title);
-
-                const table = document.createElement("table");
-                table.className = "judge-table";
-
-                const thead = document.createElement("thead");
-                const headRow = document.createElement("tr");
-                ["Round", "Azul", "Rojo"].forEach(txt => {
-                    const th = document.createElement("th");
-                    th.textContent = txt;
-                    headRow.appendChild(th);
-                });
-                thead.appendChild(headRow);
-                table.appendChild(thead);
-
-                const tbody = document.createElement("tbody");
-
-                for (let r = 1; r <= roundLimit; r++) {
-                    const row = document.createElement("tr");
-
-                    const tdRound = document.createElement("td");
-                    tdRound.textContent = r;
-                    row.appendChild(tdRound);
-
-                    const tdAzul = document.createElement("td");
-                    const selAzul = createScoreSelect();
-                    selAzul.className = "score-azul";
-                    selAzul.addEventListener("change", () => calculateJudgeTotals(card));
-                    tdAzul.appendChild(selAzul);
-                    row.appendChild(tdAzul);
-
-                    const tdRojo = document.createElement("td");
-                    const selRojo = createScoreSelect();
-                    selRojo.className = "score-rojo";
-                    selRojo.addEventListener("change", () => calculateJudgeTotals(card));
-                    tdRojo.appendChild(selRojo);
-                    row.appendChild(tdRojo);
-
-                    tbody.appendChild(row);
-                }
-
-                table.appendChild(tbody);
-                card.appendChild(table);
-
-                const totalsDiv = document.createElement("div");
-                totalsDiv.className = "totals";
-                totalsDiv.innerHTML = `
-                    Total Azul: <span class="total-azul">0</span> |
-                    Total Rojo: <span class="total-rojo">0</span>
-                `;
-                card.appendChild(totalsDiv);
-
-                cardsContainer.appendChild(card);
-            });
-        }
-
-        function generateAmateurCard() {
-            cardsContainer.innerHTML = "";
-
-            const card = document.createElement("div");
-            card.id = "amateurCard";
-
-            const title = document.createElement("h3");
-            title.textContent = "Puntuación Amateur (final)";
-            card.appendChild(title);
-
-            const table = document.createElement("table");
-            table.className = "judge-table";
-
-            const thead = document.createElement("thead");
-            const headRow = document.createElement("tr");
-            ["Azul", "Rojo"].forEach(txt => {
-                const th = document.createElement("th");
-                th.textContent = txt;
-                headRow.appendChild(th);
-            });
-            thead.appendChild(headRow);
-            table.appendChild(thead);
-
-            const tbody = document.createElement("tbody");
-            const row = document.createElement("tr");
-
-            const tdAzul = document.createElement("td");
-            const inputAzul = document.createElement("input");
-            inputAzul.type = "number";
-            inputAzul.min = "0";
-            inputAzul.style.width = "80px";
-            tdAzul.appendChild(inputAzul);
-            row.appendChild(tdAzul);
-
-            const tdRojo = document.createElement("td");
-            const inputRojo = document.createElement("input");
-            inputRojo.type = "number";
-            inputRojo.min = "0";
-            inputRojo.style.width = "80px";
-            tdRojo.appendChild(inputRojo);
-            row.appendChild(tdRojo);
-
-            tbody.appendChild(row);
-            table.appendChild(tbody);
-
-            card.appendChild(table);
-
-            cardsContainer.appendChild(card);
-        }
-
-        document.getElementById("generateCardsBtn").onclick = () => {
-            if (document.getElementById("fightType").value === "pro") {
-                generateProCards();
-            } else {
-                generateAmateurCard();
-            }
-        };
-
-        // ---------- REGISTRO DE COMBATES ----------
-
-        function saveFightRecord() {
-            const num = document.getElementById("fightNumber").value;
-            const blue = document.getElementById("blueBoxer").value;
-            const red = document.getElementById("redBoxer").value;
-            const decision = document.getElementById("decision").value;
-            const winner = document.getElementById("winner").value;
-
-            if (!blue || !red || !decision || !winner) {
-                statusDisplay.textContent = "Faltan datos del combate.";
-                return;
-            }
-
-            const table = document.getElementById("fightLog");
-            const row = table.insertRow(-1);
-
-            row.insertCell(0).textContent = num;
-            row.insertCell(1).textContent = blue;
-            row.insertCell(2).textContent = red;
-            row.insertCell(3).textContent = decision;
-            row.insertCell(4).textContent = round;
-            row.insertCell(5).textContent = document.getElementById("globalTimer").textContent.replace("Cronómetro: ", "");
-            row.insertCell(6).textContent = winner;
-
-            if (winner === "Azul") {
-                row.style.backgroundColor = "rgba(0, 123, 255, 0.3)";
-            } else if (winner === "Rojo") {
-                row.style.backgroundColor = "rgba(220, 53, 69, 0.3)";
-            } else {
-                row.style.backgroundColor = "rgba(108, 117, 125, 0.3)";
-            }
-
-            statusDisplay.textContent = "Combate registrado correctamente.";
-        }
-
-        // ---------- PDF ----------
-
-        document.getElementById("pdfBtn").onclick = () => {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-
-            let y = 10;
-
-            const place = document.getElementById("fightPlace").value || "";
-            const date = document.getElementById("fightDate").value || "";
-            const num = document.getElementById("fightNumber").value || "";
-            const blue = document.getElementById("blueBoxer").value || "";
-            const red = document.getElementById("redBoxer").value || "";
-            const decision = document.getElementById("decision").value || "";
-            const winner = document.getElementById("winner").value || "";
-            const duration = document.getElementById("globalTimer").textContent.replace("Cronómetro: ", "");
-
-            doc.setFontSize(14);
-            doc.text("Acta de Combate - Ringside Timer Pro", 10, y);
-            y += 8;
-
-            doc.setFontSize(11);
-            doc.text("Lugar: " + place, 10, y); y += 6;
-            doc.text("Fecha: " + date, 10, y); y += 6;
-            doc.text("N° de combate: " + num, 10, y); y += 6;
-
-            y += 2;
-            doc.text("AZUL: " + blue, 10, y); y += 6;
-            doc.text("ROJO: " + red, 10, y); y += 6;
-
-            y += 2;
-            doc.text("Fallo: " + decision, 10, y); y += 6;
-            doc.text("Ganador: " + winner, 10, y); y += 6;
-            doc.text("Duración total: " + duration, 10, y); y += 10;
-
-            // Tarjetas de jueces (solo si es pro y hay tarjetas generadas)
-            const fightType = document.getElementById("fightType").value;
-            if (fightType === "pro") {
-                const judgeCards = document.querySelectorAll(".judge-card");
-                judgeCards.forEach((card, index) => {
-                    const title = card.querySelector("h3").textContent;
-                    const totalAzul = card.querySelector(".total-azul").textContent;
-                    const totalRojo = card.querySelector(".total-rojo").textContent;
-
-                    if (y > 260) {
-                        doc.addPage();
-                        y = 10;
-                    }
-
-                    doc.setFontSize(12);
-                    doc.text(title, 10, y);
-                    y += 6;
-                    doc.setFontSize(10);
-                    doc.text("Total Azul: " + totalAzul + "  |  Total Rojo: " + totalRojo, 10, y);
-                    y += 6;
-
-                    const rows = card.querySelectorAll("tbody tr");
-                    rows.forEach(r => {
-                        if (y > 280) {
-                            doc.addPage();
-                            y = 10;
-                        }
-                        const cols = r.querySelectorAll("td");
-                        const roundTxt = cols[0].textContent;
-                        const azulVal = cols[1].querySelector("select").value || "-";
-                        const rojoVal = cols[2].querySelector("select").value || "-";
-                        doc.text("R" + roundTxt + ": Azul " + azulVal + " - Rojo " + rojoVal, 12, y);
-                        y += 5;
-                    });
-
-                    y += 4;
-                });
-            } else {
-                // Amateur card
-                const card = document.getElementById("amateurCard");
-                if (card) {
-                    const inputs = card.querySelectorAll("input");
-                    const azul = inputs[0].value || "0";
-                    const rojo = inputs[1].value || "0";
-
-                    if (y > 260) {
-                        doc.addPage();
-                        y = 10;
-                    }
-
-                    doc.setFontSize(12);
-                    doc.text("Puntuación Amateur (final)", 10, y); y += 6;
-                    doc.setFontSize(10);
-                    doc.text("Total Azul: " + azul + "  |  Total Rojo: " + rojo, 10, y); y += 6;
-                }
-            }
-
-            // Fecha/hora de emisión
-            const now = new Date();
-            const stamp = now.toLocaleString();
-            if (y > 280) {
-                doc.addPage();
-                y = 10;
-            }
-            y += 4;
-            doc.setFontSize(8);
-            doc.text("Generado: " + stamp, 10, y);
-
-            doc.save("combate_" + num + ".pdf");
-        };
-    </script>
-
-    <h2 style="margin-top:30px;">Registro de Combates</h2>
-    <table id="fightLog" border="1" cellpadding="8" style="margin:auto; color:white; border-color:white;">
-        <tr>
-            <th>#</th>
-            <th>Azul</th>
-            <th>Rojo</th>
-            <th>Fallo</th>
-            <th>Rounds</th>
-            <th>Duración Total</th>
-            <th>Ganador</th>
-        </tr>
-    </table>
-    <script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
-  }
-    // ===== IndexedDB: Base de datos del histórico =====
-    let db;
-
-    const request = indexedDB.open("RingsideFEB_DB", 1);
-
-    request.onupgradeneeded = function(event) {
-    db = event.target.result;
-    const store = db.createObjectStore("combates", { keyPath: "id", autoIncrement: true });
-    store.createIndex("fecha", "fecha", { unique: false });
-    };
-
-    request.onsuccess = function(event) {
-    db = event.target.result;
-    };
-
-    request.onerror = function(event) {
-    console.error("Error al abrir IndexedDB:", event);
-    };
-    function guardarCombate(data) {
-  const tx = db.transaction("combates", "readwrite");
-  const store = tx.objectStore("combates");
-  store.add(data);
-
-  tx.oncomplete = () => console.log("Combate guardado en histórico");
-  tx.onerror = () => console.error("Error al guardar combate");
-}
-guardarCombate({
-  fecha: new Date().toISOString(),
-  boxeadorRojo: document.getElementById("rojo").value,
-  boxeadorAzul: document.getElementById("azul").value,
-  ganador: ganadorFinal,
-  tarjetas: tarjetasFinales,
-  pdf: "generado" // opcional
-});
-function cargarHistorial(callback) {
-  const tx = db.transaction("combates", "readonly");
-  const store = tx.objectStore("combates");
-  const request = store.getAll();
-
-  request.onsuccess = () => callback(request.result);
-}
-function mostrarHistorial() {
-  cargarHistorial((combates) => {
-    const cont = document.getElementById("listaHistorial");
-    cont.innerHTML = "";
-
-    combates.forEach(c => {
-      const item = document.createElement("div");
-      item.className = "historial-item";
-      item.innerHTML = `
-        <strong>${c.boxeadorRojo} vs ${c.boxeadorAzul}</strong><br>
-        Fecha: ${new Date(c.fecha).toLocaleString()}<br>
-        Ganador: ${c.ganador}<br>
-        <button onclick="verDetalle(${c.id})">Ver Detalle</button>
-      `;
-      cont.appendChild(item);
-    });
-  });
-}
-setTimeout(mostrarHistorial, 1000);
-
-</script>
+    <div id="pdfRenderArea" style="position:absolute; left:-9999px; top:-9999px;"></div>
 
 
 </body>
