@@ -330,3 +330,41 @@ input:focus {
         padding: 12px;
     }
 }
+
+/* ===== FIX PARA PDF ===== */
+
+/* Fondo blanco real */
+.tarjeta-juez {
+    background: #ffffff !important;
+}
+
+/* Evitar cortes y deformaciones */
+.tarjeta-juez, 
+.tarjeta-juez * {
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+}
+
+/* Evitar que se corte contenido */
+.tabla-puntaje,
+.firma,
+.tarjeta-juez {
+    overflow: visible !important;
+}
+
+/* Firma sin recortes */
+#firmaCanvas {
+    background: #ffffff !important;
+    border: 2px solid #000 !important;
+}
+
+/* Tamaño estable para html2canvas */
+.tarjeta-juez {
+    width: 100% !important;
+    max-width: 480px !important;
+    margin: 0 auto !important;
+}
+
+
