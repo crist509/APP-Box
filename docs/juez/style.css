@@ -24,7 +24,7 @@ h2, h3 {
 input, button {
     border-radius: 10px;
 }
-.btn-pdf, .btn-limpiar {
+.btn-pdf, .btn-limpiar, .btn-what {
     width: 100%;
     padding: 14px;
     font-size: 18px;
@@ -33,6 +33,13 @@ input, button {
     margin-top: 15px;
     cursor: pointer;
     font-weight: bold;
+}
+.btn-what {
+    background: #15b550;
+    color: white;
+}
+.btn-what:active {
+    background: #0e8c3e;
 }
 
 .btn-pdf {
@@ -241,6 +248,13 @@ input:focus {
     border-color: #0B6E4F;
     box-shadow: 0 0 6px rgba(11,110,79,0.4);
 }
+.contenedor-botones {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
 /* ============================
    RESPONSIVE PARA CELULARES
    ============================ */
@@ -324,7 +338,8 @@ input:focus {
     }
 
     .btn-pdf,
-    .btn-limpiar {
+    .btn-limpiar,
+    .btn-what {
         width: 100%;
         font-size: 18px;
         padding: 12px;

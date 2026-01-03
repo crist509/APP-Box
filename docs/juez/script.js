@@ -138,6 +138,7 @@ canvas.addEventListener("touchend", () => dibujando = false);
 document.getElementById("limpiarFirma").addEventListener("click", () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
+
 // =========================
 //  GENERAR PDF COMPLETO (OFICIAL FEB) — VERSIÓN FINAL
 // =========================
@@ -151,7 +152,6 @@ document.getElementById("btnPDF").addEventListener("click", async () => {
     return;
   }
 
-  // Forzar fondo blanco REAL en html2canvas
   tarjeta.style.backgroundColor = "#FFFFFF";
 
   const fecha = document.getElementById("fechaCombate")?.value || "Sin fecha";
@@ -196,7 +196,6 @@ document.getElementById("btnPDF").addEventListener("click", async () => {
     // =========================
     //  CAPTURA DE TARJETA
     // =========================
-
     window.devicePixelRatio = 1;
 
     const canvasTarjeta = await html2canvas(tarjeta, {
@@ -206,29 +205,73 @@ document.getElementById("btnPDF").addEventListener("click", async () => {
     });
 
     const imgData = canvasTarjeta.toDataURL("image/png");
-
     const pageWidth = pdf.internal.pageSize.getWidth();
 
-    // =========================
-    //  TAMAÑO FIJO EN MILÍMETROS (10×14 cm)
-    // =========================
     const finalWidth = 100;   // 10 cm
     const finalHeight = 170;  // 14 cm
 
-    // Centrado real
     const x = (pageWidth - finalWidth) / 2;
     const y = 60;
 
-    // Insertar imagen EXACTA sin escalar
     pdf.addImage(imgData, "PNG", x, y, finalWidth, finalHeight);
 
     // =========================
-    //  GUARDAR PDF
+    //  GUARDAR PDF + HISTORIAL (SIN BASE64)
     // =========================
-    pdf.save("Tarjeta-Juez-FEB.pdf");
+    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+    const pdfName = `Tarjeta-Juez-FEB-${timestamp}.pdf`;
+
+    guardarHistorialTarjeta({
+      id: crypto.randomUUID(),
+      fechaGenerada: new Date().toLocaleString(),
+      juez: juez,
+      boxeadorRojo: document.getElementById("rojo")?.value || "",
+      boxeadorAzul: document.getElementById("azul")?.value || "",
+      totalRojo: document.getElementById("totalRojo")?.value || "",
+      totalAzul: document.getElementById("totalAzul")?.value || "",
+      ganador: document.querySelector(".ganador input")?.value || "",
+      pdfNombre: pdfName
+    });
+
+    pdf.save(pdfName);
   };
 
   logo.onerror = function () {
     alert("No se pudo cargar el logo. Verifica que 'logo-feb.png' exista.");
   };
+});
+
+
+// =========================
+//  GUARDAR HISTORIAL (SIN PDF BASE64)
+// =========================
+function guardarHistorialTarjeta(data) {
+  const historial = JSON.parse(localStorage.getItem("historialTarjetas")) || [];
+  historial.push(data);
+  localStorage.setItem("historialTarjetas", JSON.stringify(historial));
+}
+
+
+// =========================
+//  ENVIAR POR WHATSAPP (SIN BASE64)
+// =========================
+document.getElementById("enviarWhatsapp").addEventListener("click", () => {
+  const historial = JSON.parse(localStorage.getItem("historialTarjetas")) || [];
+  const ultima = historial[historial.length - 1];
+
+  if (!ultima) {
+    alert("No hay tarjetas generadas aún.");
+    return;
+  }
+
+  const mensaje =
+    `Tarjeta FEB\n` +
+    `Juez: ${ultima.juez}\n` +
+    `Azul: ${ultima.boxeadorAzul} (${ultima.totalAzul})\n` +
+    `Rojo: ${ultima.boxeadorRojo} (${ultima.totalRojo})\n` +
+    `Ganador: ${ultima.ganador}\n\n` +
+    `PDF generado: ${ultima.pdfNombre}`;
+
+  const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
 });
