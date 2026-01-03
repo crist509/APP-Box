@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Tarjetas - FEB</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #e9e9e9;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0B6E4F;
+            margin-bottom: 20px;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background: #0B6E4F;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .buscador {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 20px auto;
+            display: block;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #aaa;
+            font-size: 16px;
+        }
+
+        .btn-borrar-todo {
+            display: block;
+            margin: 0 auto 20px auto;
+            padding: 10px 20px;
+            background: #b30000;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .historial-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .historial-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #0B6E4F;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .historial-item h3 {
+            margin: 0 0 10px 0;
+        }
+
+        .historial-item p {
+            margin: 3px 0;
+        }
+
+        .historial-botones {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-historial {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn-verpdf {
+            background: #0B6E4F;
+        }
+
+        .btn-whatsapp {
+            background: #15b550;
+        }
+
+        .btn-borrar {
+            background: #b30000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="index.html" class="volver">← Volver al menú</a>
+
+    <h1>Historial de Tarjetas FEB</h1>
+
+    <!-- Buscador -->
+    <input type="text" id="buscador" class="buscador" placeholder="Buscar por juez, boxeador, lugar, fecha...">
+
+    <!-- Botón borrar todo -->
+    <button class="btn-borrar-todo" onclick="borrarTodo()">Borrar todo el historial</button>
+
+    <!-- Contenedor del historial -->
+    <div id="historialContainer" class="historial-container"></div>
+
+    <!-- Test interno -->
+    <script>
+        console.log("TEST: historial.html ejecuta scripts internos");
+    </script>
+
+    <!-- Script principal -->
+    <script src="script.js"></script>
+
+    <!-- Inicializar historial -->
+    <script>
+        mostrarHistorial();
+    </script>
+
+</body>
+</html>

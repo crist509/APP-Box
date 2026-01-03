@@ -2,38 +2,80 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>APP-Box</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APP-Box FEB</title>
+
     <style>
         body {
+            margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
-            background: #f4f4f4;
+            background: linear-gradient(180deg, #0B6E4F, #06402B);
+            color: white;
             text-align: center;
-            padding-top: 80px;
         }
+
+        .container {
+            padding-top: 60px;
+        }
+
+        .logo {
+            width: 120px;
+            margin-bottom: 20px;
+        }
+
         h1 {
             margin-bottom: 40px;
+            font-size: 32px;
+            letter-spacing: 1px;
         }
-        .btn {
-            display: inline-block;
-            padding: 15px 30px;
-            margin: 15px;
-            font-size: 20px;
+
+        .btn-menu {
+            display: block;
+            width: 80%;
+            max-width: 350px;
+            margin: 15px auto;
+            padding: 20px;
+            font-size: 22px;
             text-decoration: none;
             color: white;
-            background: #007bff;
-            border-radius: 8px;
+            background: #148F5A;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: 0.2s;
         }
-        .btn:hover {
-            background: #0056b3;
+
+        .btn-menu:hover {
+            background: #0F6F46;
+            transform: scale(1.03);
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            font-size: 14px;
+            opacity: 0.8;
         }
     </style>
 </head>
+
 <body>
 
-    <h1>APP-Box</h1>
+    <div class="container">
 
-    <a class="btn" href="juez/index.html">Ingresar a Juez</a>
-    <a class="btn" href="mesa/index.html">Ingresar a Mesa</a>
+        <img src="logo-feb.png" class="logo" alt="Logo FEB">
+
+        <h1>APP-BOX FEB</h1>
+
+        <a class="btn-menu" href="juez/index.html">Tarjeta del Juez</a>
+        <a class="btn-menu" href="mesa/index.html">Control de Mesa</a>
+        <a class="btn-menu" href="historial.html">Historial de Tarjetas</a>
+
+    </div>
+
+    <footer>
+        Federación Entrerriana de Boxeo — Sistema Oficial
+    </footer>
 
 </body>
 </html>
