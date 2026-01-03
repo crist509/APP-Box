@@ -367,4 +367,11 @@ input:focus {
     margin: 0 auto !important;
 }
 
+@media screen and (max-width: 600px) {
+  .tarjeta-juez {
+    transform: scale(1);
+    transform-origin: top left;
+    width: 480px !important;
+  }
+}
 

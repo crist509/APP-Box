@@ -196,6 +196,9 @@ document.getElementById("btnPDF").addEventListener("click", async () => {
     // =========================
     //  CAPTURA DE TARJETA
     // =========================
+
+    window.devicePixelRatio = 1;
+
     const canvasTarjeta = await html2canvas(tarjeta, {
       scale: 3,
       backgroundColor: "#FFFFFF",
